@@ -514,13 +514,13 @@ int32 ordatom (char *s)
  is not already present.  The typed-pointer to this ordinary atom is then
  returned.
  ----------------------------------------------------------------------------*/
-{int32 j,c;
+{int32 j,c, k;
 
 #define hashname(s) (labs((s[0]<<16)+(s[(j=strlen(s))-1]<<8)+j) % n)
 
  j= hashname(s); c= 0;
 
-// DEBUG(printf("ordatom: `%s' hashes to %d. k=%d, n=%d\n",s,j,k,n););
+ (printf("ordatom: `%s' hashes to %d. k=%d, n=%d\n",s,j,k,n));
  while (Atab[j].name[0]!=EOS)
     {if (strcmp(Atab[j].name,s) EQ 0) goto ret;
      else if (++j >= n) {j= 0; if (++c>1) error("atom table is full");}
