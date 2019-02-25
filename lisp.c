@@ -516,7 +516,7 @@ int32 ordatom (char *s)
  ----------------------------------------------------------------------------*/
 {int32 j,c;
 
-#define hashname(s) (abs((s[0]<<16)+(s[(j=strlen(s))-1]<<8)+j) % n)
+#define hashname(s) (labs((s[0]<<16)+(s[(j=strlen(s))-1]<<8)+j) % n)
 
  j= hashname(s); c= 0;
 
