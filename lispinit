@@ -47,3 +47,17 @@
 
 (SETQ NX (LAMBDA (L P) (COND ((NULL (CDR L)) NIL)
    ((EQUAL P (CAR (CDR L))) (RPLACD L (CDR L))))))
+
+
+(SETQ MAPCAR (LAMBDA (P L)
+		     (COND ((NULL L) (LIST))
+			   (T (CONS (P (CAR L)) (MAPCAR P (CDR L)))))))
+
+/(SETQ LET (SPECIAL ($NAME $EXPR) (EVAL (LIST (LIST 'LAMBDA (LIST (CAR (CAR $NAME))) $EXPR) (CAR (CDR (CAR $NAME)) )) ))) 
+(SETQ LET (SPECIAL ($NAME $EXPR)
+		   (EVAL
+		    (CONS
+		     (LIST 'LAMBDA
+			   (MAPCAR CAR $NAME)
+			   $EXPR)
+		     (MAPCAR (LAMBDA (E) (CAR (CDR E))) $NAME))))) 
