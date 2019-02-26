@@ -18,9 +18,9 @@ input text is taken from a file Z to replace the directive of the form
 and turned off with the directive "!notrace".
 
 *****************************************************************************/
-
-#define int16 int
-#define int32 long
+#include <stdint.h>
+#define int16 int16_t
+#define int32 int32_t
 #define forward extern
 
 // #if defined(__GNUC__)
@@ -166,7 +166,7 @@ void spacerpt(int32 r)
 {char s[60]; 
  int16 t;
 
- sprintf(s,"entering spacerpt: r=%ld, numf=%ld\n", r, numf); ourprint(s);
+ sprintf(s,"entering spacerpt: r=%d, numf=%d\n", r, numf); ourprint(s);
 
  t = type(r);
  if (namedfsf(t)) r = ptrv(Atab[ptrv(r)].L); /* dereference r */
@@ -174,7 +174,7 @@ void spacerpt(int32 r)
  gcmark(r);
  gc();
 
- sprintf(s,"leaving spacerpt: numf=%ld\n", numf); ourprint(s);
+ sprintf(s,"leaving spacerpt: numf=%d\n", numf); ourprint(s);
 }
 
 
@@ -514,13 +514,13 @@ int32 ordatom (char *s)
  is not already present.  The typed-pointer to this ordinary atom is then
  returned.
  ----------------------------------------------------------------------------*/
-{int32 j,c, k;
+{int32 j,c;
 
-#define hashname(s) (labs((s[0]<<16)+(s[(j=strlen(s))-1]<<8)+j) % n)
+#define hashname(s) (abs((s[0]<<16)+(s[(j=strlen(s))-1]<<8)+j) % n)
 
  j= hashname(s); c= 0;
 
- (printf("ordatom: `%s' hashes to %d. k=%d, n=%d\n",s,j,k,n));
+ // (printf("ordatom: `%s' hashes to %d. oa=%d, n=%d\n",s,j,oa(j),n));
  while (Atab[j].name[0]!=EOS)
     {if (strcmp(Atab[j].name,s) EQ 0) goto ret;
      else if (++j >= n) {j= 0; if (++c>1) error("atom table is full");}
